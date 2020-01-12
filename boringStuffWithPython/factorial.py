@@ -2,12 +2,11 @@
 
 
 def factorial(arg):
-    x = int(arg)
-    result = 1
-    for num in range(x, 0, -1):
-        result *= num
-    return result
+    """ Return factorial of number. """
+    if arg <= 1:
+        return 1
+    return arg * factorial(arg - 1)
 
 
-print(factorial(5))
-print(factorial(4))
+for x in range(10):
+    print(f'{x}! = {factorial(x)}')

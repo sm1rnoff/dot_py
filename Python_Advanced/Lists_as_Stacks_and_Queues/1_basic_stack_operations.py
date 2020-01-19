@@ -14,6 +14,7 @@ st = [int(x) for x in line2.split(' ')]
 for x in range(rem):
     st.pop()
 
+# output
 if elem in st:
     print(True)
 elif len(st) == 0:
@@ -24,6 +25,3 @@ else:
         if smallest > st[i]:
             smallest = st[i]
     print(smallest)
-
-
-# output

@@ -1,55 +1,63 @@
+from collections import deque
+
 # input
 green_light = 10  # int(input())
 free_window = 5  # int(input())
 
-action = []
-#action = ['Mercedes', 'green', 'Mercedes', 'BMW', 'Skoda', 'green']
-#action = ['Mercedes', 'Hummer', 'green', 'Hummer', 'Mercedes', 'green']
+#action = []
+action = ['Mercedes', ['Mercedes', 'BMW', 'Skoda']]
+#action = [['Mercedes', 'Hummer'], ['Hummer', 'Mercedes']]
 read_from_console = ''
 
-while read_from_console != 'END':
-    read_from_console = input()
-    action.append(read_from_console)
-action.pop()
+# while read_from_console != 'END':
+#    read_from_console = input()
+#    action.append(read_from_console)
+# action.pop()
 
-crash = False
+# so far split in separate lists and all comprised in a master one which we could iterate on
+
+#crash = False
 car_count = 0
-window_cnt = action.count('green')
+hit_at_char = 0
+car = ''
+green_count = len(action) - 1
 
 
-def green_window():
-    global crash
-    global car_count
-    global green_l
-    global free_w
-
+def crash_in_car_pool():
+    """ once split on separate pools (deque) we check for possible accidents in each and every one of them """
     green_l = green_light
     free_w = free_window
+    global car_count
+    global hit_at_char
+    global car
+    green_on = True
 
-    for idx in range(action.index('green')):
-        print('DEBUG action.index(green): ', action.index('green'))
-        car = action[idx]
-        print(f'DEBUG car: {car}')
+    pool = deque(action.pop(0))
+    while pool:
+        car = pool.popleft()
         car_count += 1
+
         green_l -= len(car)
-        if green_l <= 0:
+        if green_l < 0:
+            green_on = False
             free_w += green_l
             if free_w < 0:
-                print('A crash happened!')
-                print(f'{car} was hit at {car[free_w]}.')
-                crash = True
-
-            # removing 'green' item in order to be ready for the next window
-            action.remove('green')
-            break
-    action.remove('green')
+                hit_at_char = free_w
+                return True
+        if green_on == False:
+            return False
 
 
-for i in range(window_cnt):
-    if crash == True:
-        break
-    green_window()
+def result_output():
+    """ gathers stats from previous def and outputs to console"""
+    global green_count
 
-if crash != True:
-    print('Everyone is safe!')
-    print(f'{car_count} total cars passed the crossroad!')
+    while green_count:
+        green_count -= 1
+        crash_in_car_pool()
+        if crash_in_car_pool() == True:
+            return print(f'A crash happened!\n{car} was hit at {hit_at_char}.')
+    return print(f'Everyone is safe!\n{car_count} total cars passed the crossroad!')
+
+
+result_output()

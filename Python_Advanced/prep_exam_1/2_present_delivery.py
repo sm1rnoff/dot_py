@@ -5,12 +5,13 @@
 - S - V
 - - - -
 X - - -
-up
-right
-down
-right
-Christmas morning
 """
+
+
+def print_mtrx(mtrx):
+    """ prints an input matrix with spaces between cells"""
+    for row in mtrx:
+        print(' '.join(list(row)))
 
 
 def read_matrix_from_console():
@@ -38,7 +39,7 @@ def nice_kids_counter():
 
 
 def up():
-    global found, s_row, s_col, matrix
+    global found, s_row, s_col
     s_row, s_col = find_santa()
     found = matrix[s_row + 1][s_col]
     matrix[s_row + 1][s_col] = 'S'
@@ -46,7 +47,7 @@ def up():
 
 
 def down():
-    global found, s_row, s_col, matrix
+    global found, s_row, s_col
     s_row, s_col = find_santa()
     found = matrix[s_row - 1][s_col]
     matrix[s_row - 1][s_col] = 'S'
@@ -54,7 +55,7 @@ def down():
 
 
 def left():
-    global found, s_row, s_col, matrix
+    global found, s_row, s_col
     s_row, s_col = find_santa()
     found = matrix[s_row][s_col - 1]
     matrix[s_row][s_col - 1] = 'S'
@@ -62,31 +63,47 @@ def left():
 
 
 def right():
-    global found, s_row, s_col, matrix
+    global found, s_row, s_col
     s_row, s_col = find_santa()
     found = matrix[s_row][s_col + 1]
     matrix[s_row][s_col + 1] = 'S'
     matrix[s_row][s_col] = '-'
 
+# actions in case comming across either 'C' or 'V'
+
 
 def c_found():
-    pass
+    global presents_cnt, kids, interruption_needed
+    # check up
+    if matrix[s_row + 1][s_col] == 'V' or matrix[s_row + 1][s_col] == 'X':
+        if presents_cnt == 0:
+            interruption_needed = True
+            return
+        presents_cnt -= 1
+        kids -= 1
+        matrix[s_row + 1][s_col] == '-'
+    # check right
+    if matrix[s_row][s_col + 1] == 'V' or matrix[s_row + 1][s_col] == 'X':
+        if presents_cnt == 0:
+            interruption_needed = True
+            return
+        presents_cnt -= 1
+        kids -= 1
+        matrix[s_row + 1][s_col] == '-'
+    # check left
+    if matrix[s_row][s_col - 1] == 'V' or matrix[s_row + 1][s_col] == 'X':
+        if presents_cnt == 0:
+            interruption_needed = True
+            return
+        presents_cnt -= 1
+        kids -= 1
+        matrix[s_row + 1][s_col] == '-'
 
 
 def v_found():
     global presents_cnt, kids
-    if presents_cnt > 0:
-        presents_cnt -= 1
-    else:
+    presents_cnt -= 1
     kids -= 1
-
-
-def x_found():
-    pass
-
-
-def dash_found():
-    pass
 
 
 # get initial input
@@ -94,8 +111,9 @@ presents_cnt = int(input())
 rows = int(input())
 matrix = read_matrix_from_console()
 kids = nice_kids_counter()
+total_kids = kids
 found = ''
-
+interruption_needed = False
 # actions starts here
 command = ''
 
@@ -115,13 +133,22 @@ while command != 'Christmas morning':
         print(f'DEBUG: [ERROR] command = {command}')
         continue
 
-    if found == 'X':
-        x_found()
-    elif found == 'V':
+    if found == 'V':
         v_found()
     elif found == 'C':
         c_found()
-    elif found == '-':
-        dash_found()
     else:
-        print(f'DEBUG: [ERROR] found = {found}')
+        print(f'DEBUG: found = {found}')
+
+    if interruption_needed == True:
+        break
+
+if presents_cnt == 0 and kids > 0:
+    print('Santa ran out of presents!')
+
+print_mtrx(matrix)
+
+if kids == 0:
+    print(f'Good job, Santa! {total_kids} happy nice kid/s.')
+else:
+    print(f'No presents for {kids} nice kid/s.')

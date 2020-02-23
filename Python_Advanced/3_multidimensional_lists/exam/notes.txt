@@ -1,0 +1,49 @@
+#no_recursion_exam
+
+
+def calculation(oper):
+    if oper == '*':
+        return var1 * var2
+    elif oper == '+':
+        return var1 + var2
+    elif oper == '-':
+        return var1 - var2
+    else:
+        return var1 / var2
+
+
+input_str = '10 23 * 4 2 / 30 10 + 100 50 - 2 -1 *'
+#in_lst = list(input().split(' '))
+#'10 23 * 4 2 / 30 10 + 100 50 - 2 -1 *'
+# 0  1  2 3 4 5  6 7  8 9  10 11 12 13 14
+# 230 4 2 / 30 10 + 100 50 - 2 -1 *'
+
+#in_lst = list(input().split(' '))
+in_lst = deque(input_str.split(' '))
+strt_len = len(in_lst)
+
+while in_lst:
+
+    var1 = int(in_lst.popleft())
+    var2 = int(in_lst.popleft())
+    opr = in_lst.popleft()
+    #result = calculation(opr)
+
+
+# 2
+def result(in_lst):
+    """ must use recursion"""
+    if len(in_lst) == strt_len:
+        v1 = int(in_lst.popleft())
+        v1 = int(in_lst.popleft())
+        if oper == '*':
+            return var1 * var2
+        elif oper == '+':
+            return var1 + var2
+        elif oper == '-':
+            return var1 - var2
+        else:
+            return var1 / var2
+
+        return v1 opr v2
+    return result(arg) opr v1 opr v2

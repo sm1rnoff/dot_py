@@ -1,9 +1,11 @@
+# better syntacticaly but with shit logic... doesn't work but makes no sense to fix it now...
+
+
 from collections import deque
 
 # get input and declare variables
 boxes = deque([int(item) for item in input().split(' ')])
 magics = deque([int(item) for item in input().split(' ')])
-fail = True
 
 cost_table = {150: 'Doll', 250: 'Wooden train',
               300: 'Teddy bear', 400: 'Bicycle'}
@@ -34,6 +36,27 @@ while len(boxes) != 0 and len(magics) != 0:
                 boxes.pop()
                 magics.popleft()
 
+
+success = (present_ready['Doll'] and present_ready['Wooden train']) and (
+    present_ready['Teddy bear'] and present_ready['Bicycle'])
+
+if success:
+    print('The presents are crafted! Merry Christmas!')
+else:
+    print('No presents this Christmas!')
+
+if boxes:
+    # quotes and doble quotes used, otherwise doesn't work
+    print(f"Materials left:{', '.join(map(str, reversed(boxes)))}")
+
+if magics:
+    print(f"Magic  left:{', '.join(map(str, magics))}")
+
+for key, value in sorted(present_ready.items()):
+    if value:
+        print(f'{key}: {value}')
+
+"""
 if present_ready['Doll'] != 0 and present_ready['Wooden train'] != 0:
     print('The presents are crafted! Merry Christmas!')
     if len(boxes) != 0:
@@ -64,3 +87,8 @@ else:
         print(', '.join(str(num) for num in magics))
     [print(f'{key}: {present_ready[key]}')
      for key in present_ready if present_ready[key] != 0]
+
+#input
+10 -5 20 15 -30 10
+40 60 10 4 10 0
+"""

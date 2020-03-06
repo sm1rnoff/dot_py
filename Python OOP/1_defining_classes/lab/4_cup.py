@@ -2,16 +2,13 @@ class Cup:
     def __init__(self, size, quantity):
         self.total = int(size)
         self.initial_amount = int(quantity)
-        self.space_left = int(size) - int(quantity)
 
-    def fill(self, fill):
-        fill_amount = int(fill)
-        self.space_left -= fill_amount
-        if self.space_left < 0:
-            self.space_left = 0
+    def fill(self, mil):
+        self.initial_amount += int(mil)
+        self.initial_amount = min(self.initial_amount, self.total)
 
     def status(self):
-        return self.space_left
+        return self.total - self.initial_amount
 
 
 # tests starts here

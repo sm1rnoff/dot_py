@@ -2,13 +2,15 @@ from math import pi
 from abc import ABC, abstractmethod
 
 
-class Shape:
+class Shape(ABC):
+    def __str__(self):
+        return f'Area: {self.calculate_area()}, Perimerter: {self.calculate_perimeter()}'
 
-    # @abstractmethod
+    @abstractmethod
     def calculate_area(self):
         pass
 
-    # @abstractmethod
+    @abstractmethod
     def calculate_perimeter(self):
         pass
 
@@ -20,6 +22,9 @@ class Circle(Shape):
     def calculate_area(self):
         return self.__radius ** 2 * pi
 
+    def calculate_perimeter(self):
+        return 2 * self.__radius * pi
+
 
 class Rectangle(Shape):
     def __init__(self, height, width):
@@ -27,13 +32,21 @@ class Rectangle(Shape):
         self.__width = width
 
     def calculate_area(self):
+        return self.__height * self.__width
+
+    def calculate_perimeter(self):
         return 2 * (self.__height + self.__width)
 
 
-circle = Circle(5)
-print(circle.calculate_area())
-print(circle.calculate_perimeter())
+sh = [
+    # Shape(),
+    Circle(5),
+    Rectangle(2, 3)
+]
 
-rectangle = Rectangle(10, 20)
-print(rectangle.calculate_area())
-print(rectangle.calculate_perimeter())
+
+def print_shape(s: Shape):
+    print(s)
+
+
+[print_shape(s) for s in sh]

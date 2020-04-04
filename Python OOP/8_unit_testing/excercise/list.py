@@ -4,28 +4,24 @@ class IntegerList:
         for x in args:
             if type(x) == int:
                 self.__data.append(x)
-
+ 
     def get_data(self):
         return self.__data
-
+ 
     def add(self, element):
         if not type(element) == int:
             raise ValueError("Element is not Integer")
         self.get_data().append(element)
         return self.get_data()
-
+ 
     def remove_index(self, index):
         if index >= len(self.get_data()):
             raise IndexError("Index is out of range")
         a = self.get_data()[index]
         del self.get_data()[index]
         return a
-
+ 
     def get(self, index):
         if index >= len(self.get_data()):
             raise IndexError("Index is out of range")
         return self.get_data()[index]
-
-
-int_list = IntegerList(1, 2, 3, 4, 5)
-print(int_list.remove_index(1))

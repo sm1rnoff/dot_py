@@ -22,7 +22,7 @@ class ChocolateFactory(Factory):
     def remove_ingredient(self, ingredient_type: str, quantity: int):
         if ingredient_type in self.ingredients:
             if quantity <= self.ingredients[ingredient_type]:
-                self.ingredients[ingredient_type] = quantity
+                self.ingredients[ingredient_type] -= quantity
             else:
                 raise ValueError(
                     "Ingredient quantity cannot be less than zero")

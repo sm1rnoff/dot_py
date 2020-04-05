@@ -16,9 +16,16 @@ class EggFactory(Factory):
             raise TypeError(
                 f"Ingredient of type {ingredient_type} not allowed in {self.__class__.__name__}")
 
-    def remove_ingredient(self):
-        pass
+    def remove_ingredient(self, ingredient_type: str, quantity: int):
+        if ingredient_type in self.ingredients:
+            if quantity <= self.ingredients[ingredient_type]:
+                self.ingredients[ingredient_type] -= quantity
+            else:
+                raise ValueError(
+                    "Ingredient quantity cannot be less than zero")
+        else:
+            raise KeyError("No such ingredient in the factory")
 
     @property
     def products(self):
-        pass
+        return [print(key) for key in self.ingredients.keys()]

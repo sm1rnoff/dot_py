@@ -9,7 +9,10 @@ class EggFactory(Factory):
         ingredients = ["chicken egg", "quail egg"]
         if ingredient_type in ingredients:
             if self.can_add(quantity):
-                self.ingredients[ingredient_type] = quantity
+                if ingredient_type in self.ingredients:
+                    self.ingredients[ingredient_type] += quantity
+                else:
+                    self.ingredients[ingredient_type] = quantity
             else:
                 raise ValueError("Not enough space in factory")
         else:
@@ -28,4 +31,5 @@ class EggFactory(Factory):
 
     @property
     def products(self):
-        return [print(key) for key in self.ingredients.keys()]
+        return self.ingredients
+#        return [print(key) for key in self.ingredients.keys()]

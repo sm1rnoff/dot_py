@@ -12,7 +12,10 @@ class ChocolateFactory(Factory):
                        "dark chocolate", "milk chocolate", "sugar"]
         if ingredient_type in ingredients:
             if self.can_add(quantity):
-                self.ingredients[ingredient_type] = quantity
+                if self.ingredients[ingredient_type]:
+                    self.ingredients[ingredient_type] = quantity
+                else:
+                    self.ingredients[ingredient_type] += quantity
             else:
                 raise ValueError("Not enough space in factory")
         else:

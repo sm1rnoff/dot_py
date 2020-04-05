@@ -16,4 +16,8 @@ class Factory(ABC):
         pass
 
     def can_add(self, value: int):
-        return value <= self.capacity
+        if self.capacity - value >= 0:
+            self.capacity -= value
+            return True
+        else:
+            return False

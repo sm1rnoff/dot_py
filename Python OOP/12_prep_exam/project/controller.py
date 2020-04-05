@@ -32,8 +32,7 @@ class Controller:
     def fight(self, attack_name: str, enemy_name: str):
         attacker = self.player_repository.find(attack_name)
         enemy = self.player_repository.find(enemy_name)
-        battlefield = BattleField()
-        battlefield.fight(attacker, enemy)
+        BattleField.fight(attacker, enemy)
         return f"Attack user health {attacker.health} - Enemy user health {enemy.health}"
 
     def report(self):

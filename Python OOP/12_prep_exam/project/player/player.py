@@ -36,4 +36,4 @@ class Player(ABC):
 
     @property
     def is_dead(self):
-        return self.health < 0
+        return self.health <= 0

@@ -15,12 +15,11 @@ class PlayerRepository:
             raise ValueError(f"Player {player.username} already exists!")
         self.players.append(player)
 
-    def remove(self, player: str):
-        if player == "":
+    def remove(self, player_name: str):
+        if player_name == "":
             raise ValueError("Player cannot be an empty string!")
-        player_to_remove = [
-            player for plr in self.players if plr.username == player][0]
-        self.players.remove(player_to_remove)
+        found_player = self.find(player_name)
+        self.players.remove(found_player)
 
     def find(self, username):
         player_to_return = [
